@@ -1,0 +1,9 @@
+1. Role of webpack : It is going to bundle all of our modules together
+2. Role of babel : Convert the jsx into normal javascript so that browser can understand it
+3. Webpack and babel togetherly will create a single js file which we can give to browser for running it
+4. Webpack will look at the entry point figure out all application module and combine it as single file
+5. html-webpack-plugin will automatically generate index.html which will be having reference to our output js file
+6. preset-env will transform class/functional components syntax to browser understandable funstions
+7. preset-react will convert jsx to React.createElement(...)
+8. webpack-dev-server can be helpful while development ( it uses local-cache nothing related with dist)
+ 
