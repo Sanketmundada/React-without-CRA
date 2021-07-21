@@ -1,10 +1,10 @@
-const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
   /* Entry point where webpack should look */
-  entry: "./src/index.tsx",
+  entry: './src/index.tsx',
   /* When webpack bundles all modules in one single file
     It looks at the output here, in which it goes to 'root' dir
     and inside the 'dist' folder copy the whole js into the mentioned file.
@@ -13,11 +13,14 @@ module.exports = {
     be created with all bundled code inside it.
   */
   output: {
-    path: path.resolve(__dirname, "dist"),
-    filename: "index_bundle.js",
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'index_bundle.js',
   },
   resolve: {
-    extensions: [".tsx", ".ts", ".js", ".jsx"],
+    /**
+     * An array of extensions that should be used to resolve modules
+     */
+    extensions: ['.tsx', '.ts', '.js', '.jsx'],
   },
   /* What's cool abt webpack is that we can tell it
      what transformation it needs to make on our code
@@ -36,7 +39,7 @@ module.exports = {
       {
         test: /\.(js)?$/,
         exclude: /node_modules/,
-        loader: require.resolve("babel-loader"),
+        loader: require.resolve('babel-loader'),
       },
       /* This tells webpack if it sees any .css file run style and css loader on it
          css-loader will look for any css imports
@@ -47,16 +50,19 @@ module.exports = {
       {
         test: /\.css$/,
         use: [
+          /**
+           * This plugin extracts CSS into separate files. It creates a CSS file per JS file which contains CSS.
+           */
           MiniCssExtractPlugin.loader,
           // "style-loader",
-          "css-loader",
-          "postcss-loader",
+          'css-loader',
+          'postcss-loader',
         ],
       },
       /* For typescript */
       {
         test: /\.(tsx|ts)?$/,
-        use: "ts-loader",
+        use: 'ts-loader',
         exclude: /node_modules/,
       },
     ],
@@ -66,11 +72,11 @@ module.exports = {
   */
   plugins: [
     new MiniCssExtractPlugin({
-      filename: "index.css",
-      chunkFilename: "style.css",
+      filename: 'index.css',
+      chunkFilename: 'style.css',
     }),
     new HtmlWebpackPlugin({
-      template: "./src/index.html",
+      template: './src/index.html',
     }),
   ],
 };
