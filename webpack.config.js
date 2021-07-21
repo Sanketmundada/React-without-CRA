@@ -1,9 +1,10 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
   /* Entry point where webpack should look */
-  entry: "./src/index.js",
+  entry: "./src/index.tsx",
   /* When webpack bundles all modules in one single file
     It looks at the output here, in which it goes to 'root' dir
     and inside the 'dist' folder copy the whole js into the mentioned file.
@@ -14,6 +15,9 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "index_bundle.js",
+  },
+  resolve: {
+    extensions: [".tsx", ".ts", ".js", ".jsx"],
   },
   /* What's cool abt webpack is that we can tell it
      what transformation it needs to make on our code
@@ -42,7 +46,18 @@ module.exports = {
       */
       {
         test: /\.css$/,
-        use: ["style-loader", "css-loader"],
+        use: [
+          MiniCssExtractPlugin.loader,
+          // "style-loader",
+          "css-loader",
+          "postcss-loader",
+        ],
+      },
+      /* For typescript */
+      {
+        test: /\.(tsx|ts)?$/,
+        use: "ts-loader",
+        exclude: /node_modules/,
       },
     ],
   },
@@ -50,6 +65,10 @@ module.exports = {
      and more importantly will generate the script tag 
   */
   plugins: [
+    new MiniCssExtractPlugin({
+      filename: "index.css",
+      chunkFilename: "style.css",
+    }),
     new HtmlWebpackPlugin({
       template: "./src/index.html",
     }),
